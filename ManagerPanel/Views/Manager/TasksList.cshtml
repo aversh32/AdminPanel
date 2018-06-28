@@ -1,0 +1,49 @@
+﻿
+@using Diss.Core.Models
+
+@{
+    @model List<Diss.Core.Models.Task>
+}
+
+    <h1>Список задач</h1>
+<table class="table table_vertical-align table-striped">
+    <thead>
+        <tr>
+            <th style="width: 200px">Название</th>
+            <th style="width: 200px">Краткое описание</th>
+            <th style="width: 200px">Предметная область</th>
+            <th style="width: 200px">Заказчик</th>
+            <th style="width: 200px">Дата создания</th>
+            <th style="width: 200px">Последнее обновление</th>
+            <th style="width: 200px">Статус</th>
+            <th style="width: 250px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in @Model)
+        {
+        <tr>
+            <td>@task.Title</td>
+            <td>@task.Description</td>
+            <td>@task.Domain.Name</td>
+            <td>@task.UserTasks.FirstOrDefault(x => x.RoleId == 2)?.User?.Email</td>
+            <td>@task.CreatedAt</td>
+            <td>@task.UpdatedAt</td>
+            <td>@task.Status.Name</td>
+            <td>
+                @if (ViewBag.page == "newTasks")
+                {
+                    <a href="@Url.Action("EditNewTask", "Manager", new {id = task.Id})" class="btn btn-info">Просмотреть</a>
+                }
+
+                @if (ViewBag.page == "tasksForAppropriation")
+                {
+                    <a href="@Url.Action("EditAppropriationTask", "Manager", new {id = task.Id})" class="btn btn-info">Просмотреть</a>
+                }
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

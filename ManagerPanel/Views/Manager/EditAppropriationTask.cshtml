@@ -1,0 +1,84 @@
+﻿
+@using Diss.Core.Models
+
+@{
+    ViewData["Title"] = "Edit";
+    @model WebService.Models.TaskViewModel;
+}
+
+<h2>Назначение аналитика и координатора</h2>
+
+<div class="card">
+    <div class="content">
+        <form id="tasksForm" asp-action="EditAppropriationTask" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Название задачи</label>
+                        <input type="text" asp-for="Task.Title" class="form-control border-input" placeholder="http://site.ru">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Описание задачи</label>
+                        <input type="text" asp-for="Task.Description" class="form-control border-input" placeholder="http://site.ru">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Дата создания</label>
+                        <div class="input-group date" id="publishDatePicker">
+                            <input type="text" asp-for="Task.CreatedAt" asp-format="{0:dd.MM.yyyy HH:mm}" class="form-control border-input" />
+                            <span class="input-group-addon border-input">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Аналитик</label>
+                        @Html.DropDownListFor(m => m.AnalystId, new SelectList(Model.AnalystList, "Id", "Email"), " ")
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Координатор</label>
+                        @Html.DropDownListFor(m => m.CoordinatorId, new SelectList(Model.CoordinatorList, "Id", "Email"), " ")
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-info btn-fill btn-wd">Сохранить</button>
+                        <a href="@Url.Action("TasksForAppropriationList")" class="btn btn-wd">Отмена</a>
+                    </div>
+                </div>
+            </div>
+
+            <input asp-for="Task.Id" type="hidden" />
+            <input asp-for="Task.DomainId" type="hidden" />
+            <input asp-for="Task.Alternatives" type="hidden" />
+            <input asp-for="Task.MathData" type="hidden" />
+            <input asp-for="Task.CreatedAt" type="hidden" />
+            @*<input asp-for="Task.task_type_id" type="hidden" />*@
+        </form>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+

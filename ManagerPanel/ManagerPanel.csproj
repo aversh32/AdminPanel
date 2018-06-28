@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Diss.Services\Diss.Services.csproj" />
+    <ProjectReference Include="..\Models\Diss.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataAccess.Client.EFCore">
+      <HintPath>..\..\..\..\..\..\..\WORK_FOLDER\Andrey\DataAccess\DataAccess.Client.EFCore\bin\Debug\netcoreapp2.0\DataAccess.Client.EFCore.dll</HintPath>
+    </Reference>
+    <Reference Include="DataAccess.Core">
+      <HintPath>..\..\..\..\..\..\..\WORK_FOLDER\Andrey\DataAccess\DataAccess.Core\bin\Debug\netstandard2.0\DataAccess.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DataAccess.CQRS">
+      <HintPath>..\..\..\..\..\..\..\WORK_FOLDER\Andrey\DataAccess\DataAccess.CQRS\bin\Debug\DataAccess.CQRS.dll</HintPath>
+    </Reference>
+    <Reference Include="DataAccess.Repository.EFCore">
+      <HintPath>..\..\..\..\..\..\..\WORK_FOLDER\Andrey\DataAccess\DataAccess.Client.EFCore\bin\Debug\netcoreapp2.0\DataAccess.Repository.EFCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.EntityFrameworkCore.PostgreSQL">
+      <HintPath>..\packages\Npgsql.EntityFrameworkCore.PostgreSQL.2.1.0\lib\netstandard2.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

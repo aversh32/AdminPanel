@@ -1,0 +1,81 @@
+﻿
+@using Diss.Core.Enums
+@using Diss.Core.Models
+
+@{
+    ViewData["Title"] = "Edit";
+    @model Diss.Core.Models.Task;
+}
+
+<h2>Рассмотрение заявки на решение задачи</h2>
+
+<div class="card">
+    <div class="content">
+        <form id="tasksForm" asp-action="EditNewTask" method="post" asp-antiforgery="true">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Название задачи</label>
+                        <input type="text" asp-for="Title" class="form-control border-input" placeholder="http://site.ru">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Описание задачи</label>
+                        <input type="text" asp-for="Description" class="form-control border-input" placeholder="http://site.ru">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Заказчик</label>
+                        <br />
+                        @{
+                            string CustomerName = Model.UserTasks.FirstOrDefault(x => x.RoleId == (int)RolesEnum.Customer)?.User?.Email;
+                        }
+                        @CustomerName;
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Дата создания</label>
+                        <div class="input-group date" id="publishDatePicker">
+                            <input type="text" asp-for="CreatedAt" asp-format="{0:dd.MM.yyyy HH:mm}" class="form-control border-input" />
+                            <span class="input-group-addon border-input">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-info btn-fill btn-wd">Одобрить</button>
+                        <a href="@Url.Action("Index")" class="btn btn-wd">Отмена</a>
+                        <button type="button" class="btn btn-danger btn-wd" data-toggle="modal" data-target="#confirmModal">Отклонить</button>
+                    </div>
+                </div>
+            </div>
+
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="DomainId" type="hidden" />
+            <input asp-for="Alternatives" type="hidden" />
+            <input asp-for="MathData" type="hidden" />
+        </form>
+       
+        <div class="clearfix"></div>
+    </div>
+</div>
+

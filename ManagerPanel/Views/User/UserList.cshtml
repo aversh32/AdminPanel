@@ -1,0 +1,49 @@
+﻿@using Diss.Core.Models
+
+@{
+    @model List<User>
+}
+
+    <h1>Список пользователей</h1>
+    <table class="table table_vertical-align table-striped">
+        <thead>
+        <tr>
+            <th style="width: 200px">Имя</th>
+            <th style="width: 200px">Роли</th>
+            <th style="width: 200px">Предметные области</th>
+            <th style="width: 200px">Текущие задачи</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in @Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    <ul>
+                        @foreach (var role in user.UserRoles?.Select(x => x.Role))
+                        {
+                            @role.Name
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var domain in user.UserDomains?.Select(x => x.Domain))
+                        {
+                            <li>@domain.Name</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var task in user.UserTasks?.Select(x => x.Task))
+                        {
+                            <li>@task.Title</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
