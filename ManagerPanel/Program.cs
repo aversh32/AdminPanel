@@ -20,6 +20,7 @@ namespace ManagerPanel
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls(urls: "http://localhost:5001")
                 .Build();
     }
 }
