@@ -126,7 +126,9 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Data\DissRepository.cs" />
+    <Compile Include="Data\RolesDataService.cs" />
     <Compile Include="Data\TasksDataService.cs" />
+    <Compile Include="Data\UserRoleDataService.cs" />
     <Compile Include="Data\UsersDataService.cs" />
     <Compile Include="Data\UserTaskDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

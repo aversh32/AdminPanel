@@ -19,9 +19,13 @@
         /// </summary>
         Analyst = 4,
         /// <summary>
+        /// Куратор экспертного сообщества
+        /// </summary>
+        Curator = 5,
+        /// <summary>
         /// Главный менеджер
         /// </summary>
-        Manager = 5
+        Manager = 6
 
     }
 }

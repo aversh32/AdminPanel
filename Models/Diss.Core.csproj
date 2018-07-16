@@ -230,6 +230,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataServices\IRolesService.cs" />
+    <Compile Include="DataServices\IUserRoleService.cs" />
     <Compile Include="DataServices\IUsersService.cs" />
     <Compile Include="DataServices\ITasksService.cs" />
     <Compile Include="DataServices\IUserTaskService.cs" />

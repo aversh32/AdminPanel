@@ -26,6 +26,17 @@ namespace Diss.Core.Models
         [DataType(DataType.Password)]
         [Column("encrypted_password")]
         public string Password { get; set; }
+
+        [Column("created_at")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime CreatedAt { get; set; }
+
+        [Column("updated_at")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime UpdatedAt { get; set; }
+
         public ICollection<UserTask> UserTasks { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<UserDomain> UserDomains { get; set; }

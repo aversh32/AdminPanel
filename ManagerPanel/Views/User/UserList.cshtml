@@ -18,7 +18,7 @@
         @foreach (var user in @Model)
         {
             <tr>
-                <td>@user.Email</td>
+                <td>@Html.ActionLink(user.LastName + ' ' + user.Name, "GetUser", "User", new { id = user.Id }) </td>
                 <td>
                     <ul>
                         @foreach (var role in user.UserRoles?.Select(x => x.Role))

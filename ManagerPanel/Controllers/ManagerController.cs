@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccess.Core.Specification;
@@ -9,26 +10,32 @@ using Diss.Core.DataServices;
 using Diss.Core.DataServices.JoinSpec;
 using Diss.Core.Enums;
 using Diss.Core.Models;
+using ManagerPanel.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebService.Models;
 
 namespace ManagerPanel.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class ManagerController : Controller
     {
         private readonly ITasksDataService _tasksSvc;
         private readonly IUsersService _usersSvc;
         private readonly IUserTaskService _userTaskSvc;
+        private readonly IUserRoleService _userRoleSvc;
+        private readonly IRolesService _rolesSvc;
         private const int PageSize = 20;
 
         private readonly DissContext _context;
 
-        public ManagerController(ITasksDataService tasksSvc, IUsersService usersSvc, IUserTaskService userTaskSvc, DissContext context)
+        public ManagerController(ITasksDataService tasksSvc, IUsersService usersSvc, IUserTaskService userTaskSvc, IUserRoleService userRoleSvc, IRolesService rolesSvc, DissContext context)
         {
             _tasksSvc = tasksSvc;
             _usersSvc = usersSvc;
             _userTaskSvc = userTaskSvc;
+            _userRoleSvc = userRoleSvc;
+            _rolesSvc = rolesSvc;
             _context = context;
         }
 
@@ -134,14 +141,12 @@ namespace ManagerPanel.Controllers
             {
                 var task = model.Task;
                 task.StatusId = (int)StatusesEnum.ReviewByAnalists;
-               // task.updated_at = DateTime.Now;
+                task.UpdatedAt = DateTime.Now;
                 task = await _tasksSvc.UpsertAndSave(task);
 
                 var userTaskAnalyst = new UserTask()
                 {
                     TaskId = task.Id,
-                  //  CreatedAt = DateTime.Now,
-                 //   updated_at = DateTime.Now,
                     UserId = model.AnalystId,
                     RoleId = (int)RolesEnum.Analyst
                 };
@@ -149,8 +154,6 @@ namespace ManagerPanel.Controllers
                 var userTaskCoordinator = new UserTask()
                 {
                     TaskId = task.Id,
-                    //created_at = DateTime.Now,
-                    //updated_at = DateTime.Now,
                     UserId = model.CoordinatorId,
                     RoleId = (int)RolesEnum.Coordinator
                 };
@@ -188,7 +191,6 @@ namespace ManagerPanel.Controllers
         [HttpGet]
         public async Task<ViewResult> CompletedTasksList(int? page = null)
         {
-
             var data = (await _tasksSvc.GetItemsList(new QuerySpec<Diss.Core.Models.Task>
             {
                 Filter = new QueryFilterBase<Diss.Core.Models.Task>(x => x.StatusId == (int)StatusesEnum.Completed),
@@ -198,6 +200,64 @@ namespace ManagerPanel.Controllers
             })).ToList();
 
             return View("TasksList", data);
+        }
+
+        /// <summary>
+        /// Заявки на вступление в сообщество
+        /// </summary>
+        [HttpGet]
+        public async Task<ViewResult> ApplicationForJoinList(int? page = null)
+        {
+
+            return View("Index");
+        }
+
+        /// <summary>
+        /// Регистрация пользователей вручную
+        /// </summary>
+        [HttpGet]
+        public async Task<ViewResult> RegisterUser()
+        {
+            var roles = await _rolesSvc.GetItemsList(new QuerySpec<Role>());
+            var userViewModel = new RegisterUserViewModel()
+            {
+                User = new User(),
+                Roles = roles
+            };
+
+            return View("RegisterUser", userViewModel);
+        }
+
+        /// <summary>
+        /// Регистрация пользователей вручную
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser([FromForm] RegisterUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //todo сообщение при повторяющемся email
+                model.User.CreatedAt = DateTime.Now;
+                model.User.UpdatedAt = DateTime.Now;
+                var user = await _usersSvc.UpsertAndSave(model.User);
+                //для каждой роли создаем запись в таблице UserRole
+                foreach (var roleId in model.SelectedRoles)
+                {
+                    var userRole = new UserRole()
+                    {
+                        RoleId = int.Parse(roleId),
+                        UserId = user.Id,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    };
+
+                    _userRoleSvc.UpsertItem(userRole);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+         
+            return RedirectToAction("RegisterUser");
         }
     }
 }

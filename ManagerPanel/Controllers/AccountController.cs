@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -9,11 +8,11 @@ using Diss.Core.DataServices;
 using Diss.Core.DataServices.JoinSpec;
 using Diss.Core.Enums;
 using Diss.Core.Models;
+using ManagerPanel.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using WebService.Models;
 
-namespace WebService.Controllers
+namespace ManagerPanel.Controllers
 {
     public class AccountController : Controller
     {
@@ -45,7 +44,7 @@ namespace WebService.Controllers
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.Email),
-                        new Claim(ClaimTypes.Role, "admin")
+                        new Claim(ClaimTypes.Role, "Manager")
                     };
                     ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
@@ -53,7 +52,7 @@ namespace WebService.Controllers
                     await HttpContext.SignInAsync(principal);
                     return RedirectToAction("Index", "Manager");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль, или Вы не являетесь пользователем с ролью \"Куратор экспертного сообщества\".");
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль, или Вы не являетесь пользователем с ролью \"Главный менеджер\".");
             }
             return View(model);
         }

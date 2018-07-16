@@ -43,6 +43,8 @@ namespace ManagerPanel
             services.AddScoped<ITasksDataService, TasksDataService>();
             services.AddScoped<IUsersService, UsersDataService>();
             services.AddScoped<IUserTaskService, UserTaskDataService>();
+            services.AddScoped<IUserRoleService, UserRoleDataService>();
+            services.AddScoped<IRolesService, RolesDataService>();
 
             services.AddOptions();
             services.AddMvc();
@@ -73,3 +75,4 @@ namespace ManagerPanel
         }
     }
 }
+

@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using DataAccess.Core.Specification;
-using DataAccess.Core.Specification.Filter;
 using DataAccess.Core.Specification.Order;
 using Diss.Core.DataServices;
 using Diss.Core.DataServices.JoinSpec;
-using Diss.Core.Enums;
 using Diss.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebService.Controllers
+namespace ManagerPanel.Controllers
 {
     public class UserController : Controller
     {
@@ -33,10 +29,22 @@ namespace WebService.Controllers
         {
             var data = (await _usersSvc.GetItemsList(new QuerySpec<User>
             {
-                Order = new QueryOrderBase<User>(x => x.OrderBy(u => u.Email)),
+                Order = new QueryOrderBase<User>(x => x.OrderBy(u => u.LastName)),
                 Join = new UserJoinSpec()
             })).ToList();
             return View("UserList", data);
+        }
+
+        [HttpGet]
+        public async Task<ViewResult> GetUser([FromRoute]int id, int? page = null)
+        {
+            var user = await _usersSvc.GetItem(new GetByIdSpec<User>
+            {
+                Id = id,
+                Join = new UserJoinSpec()
+            });
+
+            return View("UserInfo", user);
         }
     }
 }

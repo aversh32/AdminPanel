@@ -7,9 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diss.Core", "Models\Diss.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diss.Services", "Diss.Services\Diss.Services.csproj", "{ABB22526-451B-4F26-B468-9260063BEBFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebService", "WebApplication6\WebService.csproj", "{7C828D88-4D3C-42AA-9A3A-E3C7BDA55693}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerPanel", "ManagerPanel\ManagerPanel.csproj", "{17F86F1D-3C2A-459A-8372-E3F2D9779729}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagerPanel", "ManagerPanel\ManagerPanel.csproj", "{17F86F1D-3C2A-459A-8372-E3F2D9779729}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{ABB22526-451B-4F26-B468-9260063BEBFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABB22526-451B-4F26-B468-9260063BEBFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABB22526-451B-4F26-B468-9260063BEBFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C828D88-4D3C-42AA-9A3A-E3C7BDA55693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C828D88-4D3C-42AA-9A3A-E3C7BDA55693}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C828D88-4D3C-42AA-9A3A-E3C7BDA55693}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C828D88-4D3C-42AA-9A3A-E3C7BDA55693}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17F86F1D-3C2A-459A-8372-E3F2D9779729}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17F86F1D-3C2A-459A-8372-E3F2D9779729}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17F86F1D-3C2A-459A-8372-E3F2D9779729}.Release|Any CPU.ActiveCfg = Release|Any CPU

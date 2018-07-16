@@ -28,7 +28,8 @@
                     <li><a asp-area="" asp-controller="Manager" asp-action="CompletedTasksList">Решенные задачи</a></li>
                     <li><a asp-area="" asp-controller="User" asp-action="Index">Участники сообщества</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Заявки на вступление</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Последние действия</a></li>
+                    <li><a asp-area="" asp-controller="Manager" asp-action="RegisterUser">Регистрация пользователей</a></li>
+                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">Выход</a></li>
                 </ul>
             </div>
         @*</div>*@
@@ -36,9 +37,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        @*<footer>
-                <p>&copy; 2018 - WebApplication6</p>
-            </footer>*@
+
     </div>
 
     <environment include="Development">
