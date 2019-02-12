@@ -76,7 +76,6 @@ namespace ManagerPanel.Controllers
             return View("EditNewTask", item);
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> EditNewTask([FromRoute]int id, [FromForm] Diss.Core.Models.Task task)
         {
@@ -121,11 +120,11 @@ namespace ManagerPanel.Controllers
             var model = new TaskViewModel
             {
                 Task = item,
-                AnalystList = await _usersSvc.GetItemsList(new QuerySpec<User>()
+                AnalystList = await _usersSvc.GetItemsList(new QuerySpec<User>
                 {
                     Filter = new QueryFilterBase<User>(x => x.UserRoles.Select(r => r.RoleId).Contains((int) RolesEnum.Analyst)),
                 }),
-                CoordinatorList = await _usersSvc.GetItemsList(new QuerySpec<User>()
+                CoordinatorList = await _usersSvc.GetItemsList(new QuerySpec<User>
                 {
                     Filter = new QueryFilterBase<User>(x => x.UserRoles.Select(r => r.RoleId).Contains((int) RolesEnum.Coordinator)),
                 })
@@ -140,27 +139,50 @@ namespace ManagerPanel.Controllers
             if (ModelState.IsValid)
             {
                 var task = model.Task;
-                task.StatusId = (int)StatusesEnum.ReviewByAnalists;
-                task.UpdatedAt = DateTime.Now;
-                task = await _tasksSvc.UpsertAndSave(task);
-
-                var userTaskAnalyst = new UserTask()
+             
+                var userTaskAnalyst = new UserTask
                 {
                     TaskId = task.Id,
                     UserId = model.AnalystId,
-                    RoleId = (int)RolesEnum.Analyst
+                    RoleId = (int)RolesEnum.Analyst,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
                 };
 
-                var userTaskCoordinator = new UserTask()
+                var userTaskCoordinator = new UserTask
                 {
                     TaskId = task.Id,
                     UserId = model.CoordinatorId,
-                    RoleId = (int)RolesEnum.Coordinator
+                    RoleId = (int)RolesEnum.Coordinator,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
                 };
 
-                _userTaskSvc.AddItem(userTaskAnalyst);
-                _userTaskSvc.AddItem(userTaskCoordinator);
-                await _userTaskSvc.Repository.SaveChangesAsync();
+                try
+                {
+                    userTaskAnalyst = await _userTaskSvc.UpsertAndSave(userTaskAnalyst);
+                    userTaskCoordinator = await _userTaskSvc.UpsertAndSave(userTaskCoordinator);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+             
+
+                task.StatusId = (int)StatusesEnum.ReviewByAnalists;
+                task.UpdatedAt = DateTime.Now;
+
+                try
+                {
+                    task = await _tasksSvc.UpsertAndSave(task);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+               
 
                 return RedirectToAction("TasksForAppropriationList");
             }

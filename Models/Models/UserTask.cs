@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DataAccess.Core;
 
@@ -8,6 +9,7 @@ namespace Diss.Core.Models
     public class UserTask: IDbEntity
     {
         [Column("id")]
+        [Key]
         public int Id { get; set; }
         [Column("user_id")]
         public int UserId { get; set; }
@@ -17,6 +19,12 @@ namespace Diss.Core.Models
         public int RoleId { get; set; }
         [Column("status")]
         public int StatusId { get; set; }
+
+        [Column("created_at")]
+        public DateTime? CreatedAt { get; set; }
+
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; }
 
         public Task Task { get; set; }
         public User User { get; set; }

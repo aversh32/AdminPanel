@@ -34,9 +34,9 @@ namespace Diss.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserRole>().HasKey(ur => new { ur.UserId, ur.RoleId });
-            modelBuilder.Entity<UserDomain>().HasKey(ud => new { ud.UserId, ud.DomainId });
-            modelBuilder.Entity<UserTask>().HasKey(ut => new { ut.UserId, ut.TaskId });
+            //modelBuilder.Entity<UserRole>().HasKey(ur => new { ur.UserId, ur.RoleId });
+            //modelBuilder.Entity<UserDomain>().HasKey(ud => new { ud.UserId, ud.DomainId });
+          //  modelBuilder.Entity<UserTask>().HasKey(ut => new { ut.UserId, ut.TaskId });
         }
     }
 }
